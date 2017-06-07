@@ -3,11 +3,15 @@ PROJECT := servant
 all: help
 
 help:
+	@echo "make test - run go test"
 	@echo "make build - build servant"
 	@echo "make build-travis - compiles binaries for x64 mac/linux and creates release tar.gz files with hashsums"
 
 build:
 	go build
+
+test:
+	go test -v
 
 build-dir:
 	@rm -rf build && mkdir build

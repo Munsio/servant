@@ -1,15 +1,23 @@
 language: go
-
 go:
-  - 1.6
-  - 1.7
-  - 1.8
-  - tip
-
+- 1.6
+- 1.7
+- 1.8
+- tip
 install:
-  - go get -v github.com/Masterminds/glide
-  - cd $GOPATH/src/github.com/Masterminds/glide && git checkout e73500c735917e39a8b782e0632418ab70250341 && go install && cd -
-  - glide install
-
+- go get -v github.com/Masterminds/glide
+- cd $GOPATH/src/github.com/Masterminds/glide && git checkout e73500c735917e39a8b782e0632418ab70250341 && go install && cd -
+- glide install
 script:
-  - make build
+- make test
+before_deploy: make travis-build
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: hKbsjqiPAroBFUsU8FPzSQh7fJ9Iv7CPeXODEYkNGlx5SbPu9dW8QvCMMu1/3sH+8uUOR7wo0CIa2TpyMNhevi/dtNaDVSzKw+mrgPOnf/fkdaF6gHSaA4nBi5G7wwCvx3mp9m4TpkN63bhQsjgALv6PdJZ1FyLsSv1810KWT8HHIE3T7IJoJVEsWytV/71o8JBOPHDFTWd9/3403ufxTcw4+S6VIO2T1a5TVrC+T8fUZ3EKX8ic9Cf1PIdoS0F4x3dQS2NJN7l94kaYY+yOuDTu4b6OcE1Ev4grSV8EP8t2JosRTcPW8Hp5nB5d6gl1s4A8Nk/EZNhcsYpuxgl5AnVKuDUX7b8e9iCh27OYh2XaMDK8IDCK24cedsH33B9m++8VMGkvb7hIoX5xywq4dkn7g/F657VxkEWXsPsKyz3/QMsZem6sWZxZXusL8m3o2GjRWrMwKNt+fuQo7hoKKXn0rmLyQ//bWxu02mBgt4lsry9FT1efoFnEUkiRvLSM8YLzInWRxAMgK9uLBnLoOivNtez8Cy3nWksI5E4vEDH2XhARG0aSodWwr/C8FXljYxEhk2VOxTFb+X4pHM9AJ7nDpv3E6hcqUpcCqQgSQtqgHnHzrtQT2kCjEFSUKU5EDJWFWWZenYX+FzBNa6VzKCRVDzHq7nmRFDPlxQz6mqw=
+  file_glob: true
+  file: dist/*
+  on:
+    go: 1.8
+    repo: Munsio/servant
