@@ -19,5 +19,6 @@ deploy:
   file_glob: true
   file: dist/*
   on:
+    tags: true
     go: 1.8
     repo: Munsio/servant
