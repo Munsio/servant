@@ -1,9 +1,10 @@
 package main
 
 import (
+	"net/http"
+
 	log "github.com/Sirupsen/logrus"
 	"gopkg.in/rjz/githubhook.v0"
-	"net/http"
 )
 
 type server struct {

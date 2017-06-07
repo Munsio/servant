@@ -1,0 +1,4 @@
+{
+    "Repository": "https://github.com/Munsio/blog",
+    "Command": "hugo build"
+}

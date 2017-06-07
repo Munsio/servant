@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -13,6 +14,7 @@ import (
 type Config struct {
 	Path     string
 	LogLevel string
+	Command  string
 
 	Repository string
 	GitUser    string
@@ -31,6 +33,7 @@ func initConfig() (*Config, error) {
 		WebhookType:    "github",
 	}
 
+	getFromFile(&config)
 	getFromEnvVars(&config)
 	getFromFlags(&config)
 
@@ -60,6 +63,8 @@ func getFromFlags(conf *Config) {
 			conf.Repository = repository
 		case "path":
 			conf.Path = path
+		case "command":
+			conf.Command = command
 		case "log-level":
 			conf.LogLevel = logLevel
 		case "git-user":
@@ -88,6 +93,10 @@ func getFromEnvVars(conf *Config) {
 		conf.Path = env
 	}
 
+	if env = os.Getenv("SERVANT_COMMAND"); len(env) > 0 {
+		conf.Command = env
+	}
+
 	if env = os.Getenv("SERVANT_LOG_LEVEL"); len(env) > 0 {
 		conf.LogLevel = env
 	}
@@ -110,5 +119,18 @@ func getFromEnvVars(conf *Config) {
 
 	if env = os.Getenv("SERVANT_WEBHOOK_SECRET"); len(env) > 0 {
 		conf.WebhookSecret = env
+	}
+}
+
+func getFromFile(conf *Config) {
+
+	_, err := os.Stat("conf.json")
+	if err == nil {
+		file, _ := os.Open("conf.json")
+		decoder := json.NewDecoder(file)
+		err := decoder.Decode(&conf)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
 	}
 }

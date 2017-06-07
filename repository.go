@@ -1,10 +1,12 @@
 package main
 
 import (
-	log "github.com/Sirupsen/logrus"
+	"fmt"
 	"net/url"
 	"os"
 	"os/exec"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 // Repository represents an git repository
@@ -51,6 +53,7 @@ func (repo *Repository) Clone() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	repo.CallCMD()
 }
 
 func (repo *Repository) Pull() {
@@ -61,7 +64,20 @@ func (repo *Repository) Pull() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	repo.CallCMD()
 	os.Chdir("../")
+}
+
+func (repo *Repository) CallCMD() {
+	if repo.Config.Command != "" {
+		log.Printf("running command")
+		out, err := exec.Command("sh", "-c", repo.Config.Command).Output()
+		if err != nil {
+			log.Error(err)
+		} else {
+			log.Info(fmt.Sprintf("%s", out))
+		}
+	}
 }
 
 func direxists(path string) (bool, error) {

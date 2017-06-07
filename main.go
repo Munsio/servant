@@ -3,13 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"os"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 var (
 	path           string
 	repository     string
+	command        string
 	logLevel       string
 	gitUser        string
 	gitPass        string
@@ -24,6 +26,7 @@ func init() {
 
 	flag.StringVar(&path, "path", "static", "Path where servant should serve files off")
 	flag.StringVar(&repository, "repository", "", "The url of the repository where servant should pull its files")
+	flag.StringVar(&command, "command", "", "An special command that should be executed after the pull is completed")
 	flag.StringVar(&logLevel, "log-level", "info", "Verbosity of log output (debug,info,warn,error)")
 	flag.StringVar(&gitUser, "git-user", "", "The git username (for private repos)")
 	flag.StringVar(&gitPass, "git-pass", "", "The git password (for private repos)")

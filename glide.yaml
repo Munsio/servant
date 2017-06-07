@@ -1,0 +1,6 @@
+package: github.com/munsio/servant
+import:
+- package: github.com/Sirupsen/logrus
+  version: ^0.11.5
+- package: gopkg.in/rjz/githubhook.v0
+  version: ^0.0.1
