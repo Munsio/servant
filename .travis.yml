@@ -10,7 +10,7 @@ install:
 - glide install
 script:
 - make test
-before_deploy: make travis-build
+before_deploy: make build-travis
 deploy:
   provider: releases
   skip_cleanup: true
