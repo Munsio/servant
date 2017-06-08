@@ -5,6 +5,7 @@ all: help
 help:
 	@echo "make test - run go test"
 	@echo "make build - build servant"
+	@echo "make release - create an tag depending on the VERSION file"
 	@echo "make build-travis - compiles binaries for x64 mac/linux and creates release tar.gz files with hashsums"
 
 build:
@@ -12,6 +13,10 @@ build:
 
 test:
 	go test -v
+
+release:
+	git tag `cat VERSION`
+	git push origin master --tags
 
 build-dir:
 	@rm -rf build && mkdir build
