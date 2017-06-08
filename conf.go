@@ -124,13 +124,15 @@ func getFromEnvVars(conf *Config) {
 
 func getFromFile(conf *Config) {
 
-	_, err := os.Stat("conf.json")
+	_, err := os.Stat("config/conf.json")
 	if err == nil {
-		file, _ := os.Open("conf.json")
+		file, _ := os.Open("config/conf.json")
 		decoder := json.NewDecoder(file)
 		err := decoder.Decode(&conf)
 		if err != nil {
 			fmt.Println("error:", err)
 		}
+	} else {
+		fmt.Println("no config file found")
 	}
 }
