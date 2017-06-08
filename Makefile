@@ -25,8 +25,8 @@ dist-dir:
 	@rm -rf dist && mkdir dist
 
 ci-compile: build-dir
-	GOOS=darwin GOARCH=amd64 go build -o build/darwin-amd64/servant ./
-	GOOS=linux GOARCH=amd64 go build -o build/linux-amd64/servant ./
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o build/darwin-amd64/servant ./
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/linux-amd64/servant ./
 
 build-travis: ci-compile dist-dir
 	$(eval FILES := $(shell ls build))
